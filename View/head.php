@@ -1,9 +1,18 @@
+<?php
+        require_once '../Model/connect.php';            
+        require_once '../Controller/UsuarioController.php';
+        $objControl = new UsuarioController();
+        $objControl->verificarlogin();
+
+        
+    ?>
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sistema de Gerenciamento de Estoque- SGE</title>
+  <title>Sistema de Vendas- SV</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -55,9 +64,9 @@
     <!-- Logo -->
     <a href="home.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SGE</b></span>
+      <span class="logo-mini"><b>SV</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>SGE</b></span>
+      <span class="logo-lg"><b>SV</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -74,15 +83,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 
-    <?php
-        require_once '../Model/connect.php';            
-        require_once '../Controller/UsuarioController.php';
-        $objControl = new UsuarioController();
-
-        $objControl->verificarlogin();
-
-        
-    ?>
+ 
                 
                 
                 <span class="hidden-xs"><b><?php echo $_SESSION['usuario'];?></b></span>
@@ -121,10 +122,12 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Painel de Controle</li>
-				<li><a href="entrada">Produtos </li>
+     
+   
+                   <li><a href="PROD_listar.php"><i class="fa fa-archive"></i> <span>Produto</span></a></li>
+                   <li><a href="FORN_listar.php"><i class="fa fa-car"></i> <span>Fornecedor</span></a></li>
 
-		<li><a href="entrada"> Entradas </li>
-        <li><a href="SAI_listar.php"><i class="fa fa-minus-circle"></i> <span>Saídas</span></a></li>
+       
         <li><a href="profile.php"><i class="fa  fa-user"></i> <span>Meus Dados</span></a></li>
         <li><a href="logout.php"><i class="fa  fa-sign-out"></i> <span>Sair</span></a></li>
 
