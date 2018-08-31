@@ -19,7 +19,8 @@ function logar($email, $senha) {
         $_SESSION['idUSU'] = $id_usuario;
         $_SESSION['ativo'] = true;
         $_SESSION['permissao']=$admin;
-     
+        header('Location: view/home.php');
+
     } else if (mysqli_num_rows($result) != 1) {
         $_SESSION['usuario'] = "";
         $_SESSION['ativo'] = false;
@@ -35,11 +36,10 @@ function sair() {
     session_start();
     //______LOG
     include '../Model/LOGS.php';
-    if (NovoLog("Saiu do Sistema", $_SESSION['idUSU'])) {
+  
         session_destroy();
         header('Location: ../');
-    }
-    Alert("Ops!", "Erro ao sair do sistema, procure o suporte!", "danger");
+   
 }
 
 function testLogado() {
