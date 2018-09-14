@@ -12,10 +12,10 @@
                                     </script>";
                 }  
     if (isset( $_GET['id'])) {
-        require_once '../Controller/PropiedadeController.php';
+        require_once '../Controller/ProdutoController.php';
 
          $id=(int)$_GET['id'];
-         $objControl = new PropiedadeController();
+         $objControl = new ProdutoController();
         $objControl->excluir($id);
     }else{
         

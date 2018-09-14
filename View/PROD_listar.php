@@ -44,7 +44,10 @@ include("head.php");
                                 <thead>
                                     <tr>
                                         <th>Descrição</th>
-                                        <th>Tipo</th>
+                                        <th>Código de Barras</th>
+                                        <th>Porcentagem de Lucro(%)</th>
+                                        <th>Preço</th>
+                                        
                                         <th>Estoque Minimo</th>
                                        
                                         <th>Ações</th>
@@ -53,15 +56,15 @@ include("head.php");
                                 </thead>
                                 <tbody>
                                     <?php
-                                    require_once '../Controller/PropiedadeController.php';
-                                    $objControl = new PropiedadeController();
+                                    require_once '../Controller/ProdutoController.php';
+                                    $objControl = new ProdutoController();
                                     $objControl->listar();
                                     ?>
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th> <a href="PROP_cadastro.php"><i class="fa fa-plus-square" aria-hidden="true"></i></a></th>
+                                        <th> <a href="PROD_cadastro.php"><i class="fa fa-plus-square" aria-hidden="true"></i></a></th>
 
 
                                     </tr>

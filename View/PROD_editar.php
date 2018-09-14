@@ -31,7 +31,8 @@
                       if (mysqli_num_rows($result) ==1){
                             while ($row = $result->fetch_assoc()) {
                                 $descricao = $row['descricao'];
-                                $tipo = $row['tipo'];
+                                $lucro = $row['porcetagem_lucro'];
+                                $codigo_barras= $row['codigo_barras'];
                                 $estoque_minimo = $row['estoque_minimo'];
                                 
                              }
@@ -59,28 +60,27 @@
 
                  <form class="form-group" action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <input class="form-control" name="descricao" type="text" placeholder="Descricao" value="<?php echo $descricao;?>" required>
+                            Descrição:<input class="form-control" name="descricao" type="text" placeholder="Descricao" value="<?php echo $descricao;?>" required>
+                        </div> 
+                      <div class="form-group">
+                           Código de Barras: <input class="form-control" name="codigo" type="text" placeholder="Código de Barras" value="<?php echo $codigo_barras;?>"  required>
+                        </div> 
+                      <div class="form-group">
+                            Porcentagem de Lucro:<input class="form-control" name="lucro" type="number" placeholder="Estoque Minimo" value="<?php echo $lucro;?>"required>
                         </div> 
                         <div class="form-group">
+                            Estoque Mínimo:
                             <input class="form-control" name="estoque_minimo" type="number" placeholder="Estoque Minimo" value="<?php echo $estoque_minimo;?>"required>
                         </div>  
-                         <div class="form-group">
-                  <select class="form-control" name="tipo" placeholder="Tipo">
-                    <option value="Unidade">Unidade</option>
-                    <option value="Caixa">Caixa</option>
-                 <option value="Frasco">Frasco</option>
-                 <option value="Pacote">Pacote</option>
-
-                  </select>
-                </div>
+                      
                         <button type="submit" class="btn btn-success" name="botao">Atualizar</button>
-                        <a href="../view/PROP_listar.php"><button type="button"  class="btn btn-info">Voltar</button>    </a>
+                        <a href="../view/PROD_listar.php"><button type="button"  class="btn btn-info">Voltar</button>    </a>
                     </form>
         <?php
-            require_once '../Controller/PropiedadeController.php';
+            require_once '../Controller/ProdutoController.php';
             if (isset($_POST["botao"])) {
-                    $objControl = new PropiedadeController();
-                    $objControl->atualizar($id, $_POST["descricao"], $_POST["estoque_minimo"], $_POST["tipo"]);
+                    $objControl = new ProdutoController();
+                    $objControl->atualizar($id, $_POST["descricao"], $_POST["codigo"], $_POST["lucro"],$_POST['estoque_minimo']);
                                                        echo "<meta HTTP-EQUIV='refresh' CONTENT='1;URL='PROP_editar.php?id=".$id."'>";
 
                     }
