@@ -1,21 +1,20 @@
 <?php
 
-function cadastrarFornecedor($descricao,$estoque_minimo,$tipo) {
+function cadastrarFornecedor($cnpj,$contato,$endereco,$nome) {
 
     $conn = F_conect();
 
 
-    $sql = "INSERT INTO produto (descricao,estoque_minimo,tipo)
-                VALUES('" . $descricao . "','" . $estoque_minimo . "','" . $tipo ."' )";
+    $sql = "INSERT INTO fornecedor (cnpj,contato,endereco,nome)
+                VALUES('" . $cnpj . "','" . $contato . "','" . $endereco ."','". $nome ."'  )";
 
     if ($conn->query($sql) == TRUE) {
-        include '../Model/LOGS.php';
+       // include '../Model/LOGS.php';
         //LOG__________
-        if (NovoLog("Produto " . $descricao . " com Estoque Minimo " . $estoque_minimo . " cadastrado.", $_SESSION['idUSU'])) {
-
-            Alert("Oba!", "Produto cadastrado com sucesso", "success");
-            echo "<a href='../view/PROP_listar.php'> Listar Produtos</a>";
-        }
+      //  if (NovoLog("nome " . $nome . " com Estoque Minimo " . $estoque_minimo . " cadastrado.", $_SESSION['idUSU'])) 
+        Alert(" ", "Fornecedor cadastrado com sucesso", "success");
+        echo "<a href='../view/FORN_listar.php'> Listar Fornecedor</a>";
+        //}
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -23,18 +22,18 @@ function cadastrarFornecedor($descricao,$estoque_minimo,$tipo) {
     $conn->close();
 }
 
-function editarPropieade($id, $descricao,$estoque_minimo,$tipo) {
+function editarFornecedor($id, $cnpj,$contato,$endereco,$nome) {
     $conn = F_conect();
-    $sql = " UPDATE produto SET  descricao='" . $descricao . "' , estoque_minimo='" .
-            $estoque_minimo . "', tipo='" . $tipo . "' WHERE id= " . $id ;
+    $sql = " UPDATE fornecedor SET  cnpj='" . $cnpj . "' , contato='" .
+            $contato . "', endereco='" . $endereco . "', nome='". $nome . "' WHERE id= " . $id ;
 
     if ($conn->query($sql) === TRUE) {
-        include '../Model/LOGS.php';
+        //include '../Model/LOGS.php';
         //LOG__________
-        if (NovoLog("Produto  " . $descricao . " com Estoque Minimo " . $estoque_minimo . " atualizado", $_SESSION['idUSU'])) {
-            Alert("Oba!", "Produto Atualizado", "success ");
-            echo "<a href='../view/PROP_listar.php'> Listar Produtos</a>";
-        }
+       // if (NovoLog("Produto  " . $descricao . " com Estoque Minimo " . $estoque_minimo . " atualizado", $_SESSION['idUSU'])) {
+            Alert("", "Fornecedor Atualizado", "success ");
+            echo "<a href='../view/FORN_listar.php'> Listar Fornecedor</a>";
+      //  }
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -55,8 +54,8 @@ if($conn->query($sql)){
 
         echo "</script>";
         echo "<script language='javascript' type='text/javascript'>
-window.location.href = 'javascript:window.history.go(-1);';
-</script>";
+            window.location.href = 'javascript:window.history.go(-1);';
+            </script>";
 
     
 }

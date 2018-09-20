@@ -116,17 +116,31 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-     
-  
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Painel de Controle</li>
-     
+           <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-archive"></i> <span>Produto</span>
+                       
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="PROD_listar.php"><i class="fa fa-cube"></i> Listar Produtos</a></li>
+                    <li class="active"><a href="PROD_cadastro.php"><i class="fa fa-plus-square"></i> Novo Produto</a></li>
+                </ul>
+            </li>
    
-                   <li><a href="PROD_listar.php"><i class="fa fa-archive"></i> <span>Produto</span></a></li>
-                   <li><a href="FORN_listar.php"><i class="fa fa-car"></i> <span>Fornecedor</span></a></li>
-
+   <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-truck"></i> <span>Fornecedor</span>
+                       
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="FORN_listar.php"><i class="fa fa-truck"></i> Listar Fornecedor</a></li>
+                    <li class="active"><a href="FORN_listar.php"><i class="fa fa-plus-square"></i> Novo Fornecedor</a></li>
+                </ul>
+            </li>
        
         <li><a href="profile.php"><i class="fa  fa-user"></i> <span>Meus Dados</span></a></li>
         <li><a href="logout.php"><i class="fa  fa-sign-out"></i> <span>Sair</span></a></li>

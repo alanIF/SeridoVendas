@@ -9,9 +9,7 @@ public function listar(){
         listarProduto();
     }
     public function excluir($id){
-        excluirProduto($id);
-        
-        
+        excluirProduto($id);   
     }
    
     public function atualizar($id, $descricao,$codigo,$lucro,$estoque_minimo){
