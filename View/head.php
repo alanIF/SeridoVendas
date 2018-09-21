@@ -141,7 +141,16 @@
                     <li class="active"><a href="FORN_cadastro.php"><i class="fa fa-plus-square"></i> Novo Fornecedor</a></li>
                 </ul>
             </li>
-       
+              <li class="treeview">
+                <a href="#">
+                    <i class="fa  fa-book"></i> <span>Entradas</span>
+                       
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="ENT_listar.php"><i class="fa fa-book"></i> Listar Entradas</a></li>
+                    <li class="active"><a href="ENT_cadastro.php"><i class="fa fa-plus-square"></i> Nova Entrada</a></li>
+                </ul>
+            </li>
         <li><a href="profile.php"><i class="fa  fa-user"></i> <span>Meus Dados</span></a></li>
         <li><a href="logout.php"><i class="fa  fa-sign-out"></i> <span>Sair</span></a></li>
 
