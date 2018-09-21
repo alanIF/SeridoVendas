@@ -120,7 +120,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Painel de Controle</li>
-           <li class="active treeview">
+           <li class="treeview">
                 <a href="#">
                     <i class="fa fa-archive"></i> <span>Produto</span>
                        
@@ -131,14 +131,14 @@
                 </ul>
             </li>
    
-   <li class="active treeview">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-truck"></i> <span>Fornecedor</span>
                        
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="FORN_listar.php"><i class="fa fa-truck"></i> Listar Fornecedor</a></li>
-                    <li class="active"><a href="FORN_listar.php"><i class="fa fa-plus-square"></i> Novo Fornecedor</a></li>
+                    <li class="active"><a href="FORN_cadastro.php"><i class="fa fa-plus-square"></i> Novo Fornecedor</a></li>
                 </ul>
             </li>
        
