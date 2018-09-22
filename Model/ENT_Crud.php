@@ -1,18 +1,51 @@
 <?php
+function atualizarDadosEntrada(){
+    $conn = F_conect();
+        if(isset($_SESSION['entrada'])){
+        $result = mysqli_query($conn, "Select * from item_entrada where id_entrada=".$_SESSION['id_entrada']);
+        $qtd_total=0;
+        $preco_total=0;
+        if (mysqli_num_rows($result)) {
+            while ($row = $result->fetch_assoc()) {
+                $qtd_total=$row['qtd']+$qtd_total;
+                $preco_total=$row['preco_compra']+$preco_total;
 
-function cadastrarProduto($descricao,$codigo,$lucro,$estoque) {
+
+
+            }
+        }
+        $sql = " UPDATE entrada SET  qtd_total='" . $qtd_total . "' , valor_total='" .
+                $preco_total ."' WHERE id= " . $_SESSION['id_entrada'] ;
+
+        if ($conn->query($sql) === TRUE) {
+
+
+
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+        $conn->close();
+    }
+}
+function cadastrarEntrada($data_entrada,$observacao) {
 
     $conn = F_conect();
 
 
-    $sql = "INSERT INTO produto (descricao,codigo_barras,porcetagem_lucro,estoque_minimo)
-                VALUES('" . $descricao . "','" . $codigo . "','" . $lucro ."','".$estoque."' )";
+    $sql = "INSERT INTO entrada(data_entrada,observacao)
+                VALUES('" . $data_entrada . "','" . $observacao."' )";
 
     if ($conn->query($sql) == TRUE) {
-       
+        $result = mysqli_query($conn, "Select max(e.id) id from entrada e");
 
-            Alert("Concluído!", "Produto cadastrado com sucesso", "success");
-            echo "<a href='../view/PROD_listar.php'> Listar Produtos</a>";
+    if (mysqli_num_rows($result)) {
+        while ($row = $result->fetch_assoc()) {
+            $id= $row['id'];
+            
+        }
+        return $id;
+        }
+        
         
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -21,21 +54,61 @@ function cadastrarProduto($descricao,$codigo,$lucro,$estoque) {
     $conn->close();
 }
 
-function editarProduto($id, $descricao,$codigo,$lucro,$estoque_minimo) {
-    $conn = F_conect();
-    $sql = " UPDATE produto SET  descricao='" . $descricao . "' , estoque_minimo='" .
-            $estoque_minimo . "', codigo_barras='" . $codigo . "', porcetagem_lucro='".$lucro."' WHERE id= " . $id ;
+function cadastraritemEntrada($produto, $qtd, $data_entrada,$data_fabricacao,$data_validade,$preco_compra,$obs) {
 
-    if ($conn->query($sql) === TRUE) {
-      
-            Alert("Concluído!", "Produto Atualizado", "success ");
-            echo "<a href='../view/PROD_listar.php'> Listar Produtos</a>";
-     
+    $conn = F_conect();
+
+     if(!isset($_SESSION['entradas'])){
+        
+         $_SESSION['entradas']=array();
+         $id_entrada=cadastrarEntrada($data_entrada, $obs);
+         $_SESSION['id_entrada']=$id_entrada;
+     }else{
+        $id_entrada=$_SESSION['id_entrada'] ;
+     }
+    $sql = "INSERT INTO item_entrada(id_produto,id_entrada,qtd,preco_compra,data_fabricacao,data_validade)
+                VALUES('" . $produto . "','" . $id_entrada . "','" . $qtd ."','".$preco_compra."','".$data_fabricacao."','".$data_validade."')";
+
+    if ($conn->query($sql) == TRUE) {
+       
+
+            Alert("Concluído!", "Produto adicionado com sucesso", "success");
+            $result = mysqli_query($conn, "select max(id) entrada  from item_entrada");
+
+            if (mysqli_num_rows($result)) {
+                  while ($row = $result->fetch_assoc()) {
+                          array_push($_SESSION['entradas'],$row['entrada']);
+                    }
+
+            }
+            
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
+
     $conn->close();
 }
+function excluirEntradaItem($id) {
+
+    $conn = F_conect();
+
+    $sql = "DELETE FROM item_entrada WHERE id=" . $id;
+
+if($conn->query($sql)){
+    
+        	echo "<script language='javascript' type='text/javascript'>"
+        . "alert('Item da entrada  excluída com sucesso!');";
+
+            echo "</script>";
+        echo "<script language='javascript' type='text/javascript'>
+window.location.href = 'ENT_cadastro.php';
+</script>";
+
+    }
+      $conn->close();
+
+}
+
 
 function excluirEntrada($id) {
 

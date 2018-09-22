@@ -16,7 +16,7 @@
 
          $id=(int)$_GET['id'];
          $objControl = new EntradaController();
-        $objControl->excluir($id);
+        $objControl->excluirItem($id);
     }else{
         
         header("Location:ENT_listar.php");

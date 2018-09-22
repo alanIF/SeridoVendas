@@ -57,7 +57,41 @@ window.location.href = 'javascript:window.history.go(-1);';
       $conn->close();
 
 }
+function atualizarPrecos(){
+    $conn = F_conect();
+    $result = mysqli_query($conn, "Select * from produto");
+    // seleciono todos os produtos
+    if (mysqli_num_rows($result)) {
+        while ($row = $result->fetch_assoc()) {
+          $id_produto=$row['id'];
+          // seleciono a ultima item entrada do produto para fazer o calculo
+              $result2 = mysqli_query($conn, "Select  e.qtd qtd,e.preco_compra preco from item_entrada e where id_produto=".$id_produto." ORDER BY e.id DESC limit 1");
 
+                if (mysqli_num_rows($result2)) {
+                    while ($row2 = $result2->fetch_assoc()) {
+                        $preco=$row2['preco'];
+                        $qtd=$row2['qtd'];
+                    }
+                    // calcula preço final do produto
+                    $preco_final=($preco/$qtd)*(1+($row['porcetagem_lucro']/100));
+                    // atualizo tabela
+                        $sql = " UPDATE produto SET  preco='" . $preco_final . "'  WHERE id= " . $row['id'] ;
+
+                            if ($conn->query($sql) === TRUE) {
+
+
+
+                            } else {
+                                echo "Error: " . $sql . "<br>" . $conn->error;
+                            }
+                    }
+
+
+                    }
+    }
+
+    $conn->close();
+}
 
 function listarProduto() {
     $conn = F_conect();

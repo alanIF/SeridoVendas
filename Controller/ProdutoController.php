@@ -15,5 +15,8 @@ public function listar(){
     public function atualizar($id, $descricao,$codigo,$lucro,$estoque_minimo){
         editarProduto($id, $descricao,$codigo,$lucro,$estoque_minimo);
     }
+    public function atualizarPrecos(){
+        atualizarPrecos();
+    }
 }
 
