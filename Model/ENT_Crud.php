@@ -1,8 +1,9 @@
 <?php
-function atualizarDadosEntrada(){
+// atualiza os valores da entrada
+function atualizarDadosEntrada($id_entrada){
     $conn = F_conect();
-        if(isset($_SESSION['id_entrada'])){
-        $result = mysqli_query($conn, "Select * from item_entrada where id_entrada=".$_SESSION['id_entrada']);
+        if(isset($id_entrada)){
+        $result = mysqli_query($conn, "Select * from item_entrada where id_entrada=".$id_entrada);
         $qtd_total=0;
         $preco_total=0;
         if (mysqli_num_rows($result)) {
@@ -15,7 +16,7 @@ function atualizarDadosEntrada(){
             }
         }
         $sql = " UPDATE entrada SET  qtd_total='" . $qtd_total . "' , valor_total='" .
-                $preco_total ."' WHERE id= " . $_SESSION['id_entrada'] ;
+                $preco_total ."' WHERE id= " . $id_entrada ;
 
         if ($conn->query($sql) === TRUE) {
 
@@ -82,6 +83,53 @@ function cadastraritemEntrada($produto, $qtd, $data_entrada,$data_fabricacao,$da
 
             }
             
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+}
+// atualizar item entrada
+function atualizaritemEntrada($qtd,$data_fabricacao,$data_validade,$preco_compra,$id) {
+     $conn = F_conect();
+    $sql = " UPDATE item_entrada SET  data_fabricacao='" . $data_fabricacao . "' , data_validade='" .
+            $data_validade . "', qtd='" . $qtd . "', preco_compra='".$preco_compra."' WHERE id= " . $id ;
+
+    if ($conn->query($sql) === TRUE) {
+      
+            Alert("Concluído!", "Item da Entrada Atualizado", "success ");
+     
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    $conn->close();
+    
+}
+
+
+// cadastrar um item da entrada individualmente
+function cadastraritemEntradaIndividual($produto, $qtd, $data_entrada,$data_fabricacao,$data_validade,$preco_compra,$obs,$id_entrada) {
+
+    $conn = F_conect();
+
+   
+    $sql = "INSERT INTO item_entrada(id_produto,id_entrada,qtd,preco_compra,data_fabricacao,data_validade)
+                VALUES('" . $produto . "','" . $id_entrada . "','" . $qtd ."','".$preco_compra."','".$data_fabricacao."','".$data_validade."')";
+
+    if ($conn->query($sql) == TRUE) {
+       
+
+            
+            
+            
+            // redereciona pro ver
+             	echo "<script language='javascript' type='text/javascript'>"
+        . "alert('Item da entrada  adicionada com sucesso!');";
+
+            echo "</script>";
+        echo "<script language='javascript' type='text/javascript'>
+window.location.href = 'ENT_ver.php?id=".$id_entrada."';
+</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -184,7 +232,7 @@ function listarEntradaItem($id) {
 
            
 
-            echo"<td><a href=ENT_ver.php?id=" . $row['id'] . "><i class='fa fa-eye' aria-hidden='true'></i></a>  
+            echo"<td><a href=ENT_editaritem.php?id=" . $row['id'] . "&id_entrada=".$id."><i class='fa fa-pencil' aria-hidden='true'></i></a>  
                         <a onclick='return confirmar();' href=ENT_excluirItemV.php?id=" . $row['id'] . "><i class='fa fa-trash-o' aria-hidden='true'></i></a></td></tr>";
         }
     }

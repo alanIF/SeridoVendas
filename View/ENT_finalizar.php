@@ -9,10 +9,15 @@
         $objControl = new UsuarioController();
         $objControl1 = new EntradaController();
          $objControl2 = new ProdutoController();
-               
+                 $objControl->verificarlogin();
 
-        $objControl->verificarlogin();
-unset($_SESSION['entradas']);
+                // chamar funcao para atualizar os preços dos produtos
+        $objControl2->atualizarPrecos();
+        // atualizar valor e qtd total da entrada finalizada
+       $objControl1->atualizarDadosEntrada($_SESSION['id_entrada']);
+       unset($_SESSION['id_entrada']);
+
+        unset($_SESSION['entradas']);
 
        echo "<script language='javascript' type='text/javascript'>"
         . "alert('Entrada finalizada com sucesso!');";
@@ -21,10 +26,7 @@ unset($_SESSION['entradas']);
         echo "<script language='javascript' type='text/javascript'>
 window.location.href = 'ENT_listar.php';
 </script>";
-        // chamar funcao para atualizar os preços dos produtos
-        $objControl2->atualizarPrecos();
-        // atualizar valor e qtd total da entrada finalizada
-       $objControl1->atualizarDadosEntrada();
+       
         
     
 

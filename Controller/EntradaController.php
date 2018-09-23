@@ -1,12 +1,20 @@
 <?php
   require ('../Model/ENT_Crud.php');
 class EntradaController{
-  
+    // cadastro geral
     public function Cadastrar($produto, $qtd, $data_entrada,$data_fabricacao,$data_validade,$preco_compra,$obs){
         cadastraritemEntrada($produto, $qtd, $data_entrada,$data_fabricacao,$data_validade,$preco_compra,$obs);
     }
-   public function atualizarDadosEntrada(){
-        atualizarDadosEntrada();
+    // cadastro de um item
+     public function CadastrarItem($produto, $qtd, $data_entrada,$data_fabricacao,$data_validade,$preco_compra,$obs,$id_entrada){
+        cadastraritemEntradaIndividual($produto, $qtd, $data_entrada,$data_fabricacao,$data_validade,$preco_compra,$obs,$id_entrada);
+    }
+    
+     public function AtualizarItem($qtd, $data_fabricacao,$data_validade,$preco_compra,$id){
+        atualizaritemEntrada( $qtd, $data_fabricacao,$data_validade,$preco_compra,$id);
+    }
+   public function atualizarDadosEntrada($id){
+        atualizarDadosEntrada($id);
    }
 public function listar(){
         listarEntrada();

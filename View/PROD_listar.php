@@ -65,7 +65,11 @@ include("head.php");
                                 <tfoot>
                                     <tr>
                                         <th> <a href="PROD_cadastro.php"><i class="fa fa-plus-square" aria-hidden="true"></i></a></th>
-
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
 
                                     </tr>
                                 </tfoot>

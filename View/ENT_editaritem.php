@@ -26,7 +26,36 @@ include("head.php");
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-
+                     <?php
+                if ((isset($_GET['id']))&&(isset($_GET['id_entrada']))){
+                    $id = (int)$_GET['id'];
+                    $id_entrada= (int)$_GET['id_entrada'];
+                    $idUsu = $_SESSION['idUSU'];
+                    $conn = F_conect();
+                    $result = mysqli_query($conn, "SELECT * FROM item_entrada WHERE id=".$id);
+                      if (mysqli_num_rows($result) ==1){
+                            while ($row = $result->fetch_assoc()) {
+                               $id = $row['id'];
+                               $qtd= $row['qtd'];
+                               $fabricacao = $row['data_fabricacao'];
+                               $validade = $row['data_validade'];
+                               $preco= $row['preco_compra'];
+                               
+                             }
+                      }else{
+                         
+                          echo "<script language= 'JavaScript'>
+                                        location.href='erro.php'
+                                </script>";
+                      }
+                        $conn->close();
+                }else{
+                    echo "<script language= 'JavaScript'>
+                                        location.href='erro.php'
+                                </script>";
+        
+    }
+          ?>
 
         </div>
         <!-- /.row -->
@@ -37,44 +66,21 @@ include("head.php");
                 <div class="col-xs-12">
                       <div class="box box-primary">
             <div class="box-header with-border">
-              <h1 class="box-title">Cadastrar Entrada</h1>
+              <h1 class="box-title">Editar item da Entrada</h1>
             </div>
                                                   <div class="box-body">
 
                     <form class="form-group" action="" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                               
-                              <select class="form-control select2" name="produto" style="width: 100%;" required="">
-              <?php
-                     $conn = F_conect();
-                    $result = mysqli_query($conn, "Select * from produto");
-                      if (mysqli_num_rows($result) >=1){
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<option value='".$row['id']."'>".$row['descricao']."</option>";
-                             
-                               
-                             }
-                      }else{
-                       echo "Você nao tem produtos cadastrados. ";
-                      }
-                    
-                    ?>
-                </select>
-              </div>
+                         
                          <div class="form-group">
-                            <input class="form-control" name="qtd" type="number" placeholder="Quantidade" required>
+                            <input class="form-control" name="qtd" type="number" placeholder="Quantidade" value="<?php echo $qtd;?>" required>
                         </div>
                 <div class="form-group">
-                    <input class="form-control" name="preco_compra" type="number"  step="0.01" placeholder="Preço de Compra"  required>
+                    <input class="form-control" name="preco_compra" type="number"  step="0.01" placeholder="Preço de Compra" value="<?php echo $preco;?>" required>
                         </div>
                  <div class="form-group">
 
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right" name="data_entrada" placeholder="Data da Entrada"  data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required value="<?php echo date('d/m/y')?>;" readonly>
-                            </div>
+                        
                             <!-- /.input group -->
                         </div> 
                             <div class="form-group">
@@ -83,7 +89,7 @@ include("head.php");
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right" name="data_fabricacao" placeholder="Data de Fabricação"  data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required>
+                                <input type="text" class="form-control pull-right" name="data_fabricacao" placeholder="Data de Fabricação"  data-inputmask="'alias': 'dd/mm/yyyy'" value="<?php echo $fabricacao;?>" data-mask required>
                             </div>
                             <!-- /.input group -->
                         </div> 
@@ -93,17 +99,15 @@ include("head.php");
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right" name="data_validade" placeholder="Data de Validade"  data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required>
+                                <input type="text" class="form-control pull-right" name="data_validade" placeholder="Data de Validade"  data-inputmask="'alias': 'dd/mm/yyyy'" value="<?php echo $validade;?>" data-mask required>
                             </div>
                             <!-- /.input group -->
                         </div> 
 
-                  <textarea class="form-control" rows="4" placeholder="Observação" name="obs"></textarea>
 
-               <button type="submit" class="btn btn-info" name="botao">Adicionar Entrada</button>
-                                       <a href="../view/ENT_listar.php"><button type="button"  class="btn btn-warning">Voltar</button>    </a>
+               <button type="submit" class="btn btn-info" name="botao">Atualizar Entrada</button>
+                                       <a href="ENT_ver.php?id=<?php echo $id_entrada; ?>"><button type="button"  class="btn btn-warning">Voltar</button>    </a>
 
-                        <a href="../view/ENT_finalizar.php"><button type="button"  class="btn btn-success">Finalizar Entrada</button>    </a>
 
 
 
@@ -111,9 +115,10 @@ include("head.php");
                     <?php
                     require_once '../Controller/EntradaController.php';
                     if (isset($_POST["botao"])) {
+                        
                         $objControl = new EntradaController();
                         if(($_POST["qtd"]>0)&&($_POST['preco_compra']>0)){
-                        $objControl->Cadastrar($_POST["produto"], $_POST["qtd"], $_POST["data_entrada"],$_POST["data_fabricacao"],$_POST["data_validade"],$_POST['preco_compra'],$_POST['obs']);
+                        $objControl->AtualizarItem($_POST["qtd"], $_POST["data_fabricacao"],$_POST["data_validade"],$_POST['preco_compra'],$id);
                         }else{
                             Alert("ERROR!", "Digite uma quantidade positiva!","danger");
                         }
@@ -127,65 +132,7 @@ include("head.php");
                     
                 
                 
-                        <!-- /.box-body -->
-                         <div class="box box-info">
-                        <div class="box-header">
-                            <h3 class="box-title">Entradas Adicionadas</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="table-responsive">
-
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>N°</th>
-                                        <th>Produto</th>
-                                        <th>Quantidade</th>
-                                        <th>Data Fabricação</th>
-                                        <th>Data Validade</th>
-                                        <th>Preço Compra</th>
-
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <?php
-                                   $conn = F_conect();
-                                   if(isset($_SESSION['entradas'])){
-                                   
-                                   foreach ($_SESSION['entradas'] as &$value) {
-                                       
-                                       $result = mysqli_query($conn, "Select i_entrada.id id,p.descricao produto,i_entrada.qtd qtd,i_entrada.data_fabricacao fabricacao,i_entrada.data_validade validade,i_entrada.preco_compra preco from item_entrada i_entrada,produto p where i_entrada.id_produto=p.id and i_entrada.id=".$value);
-
-    if (mysqli_num_rows($result)) {
-        while ($row = $result->fetch_assoc()) {
-            echo"<tr><td>".$row['id']."</td><td>" . $row['produto'] . "</td><td>" . $row['qtd'] . "</td>";
-            echo"<td>" . $row['fabricacao'] . "</td>";
-            echo"<td>" . $row['validade'] . "</td>";
-            echo"<td>" . $row['preco'] . "</td>";
-
-            echo"<td>
-                        <a onclick='return confirmar_i();' href=ENT_excluirItem.php?id=" . $row['id'] . "><i class='fa fa-trash-o' aria-hidden='true'></i></a></td></tr>";
-        }
-    }
-    
-                                   }
-                                   $conn->close();
-                                   }
-                                  ?>
-                                       
-                                   
-
-    
-
-                                </tbody>
-                               
-                            </table>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
+                        
                     </div>
                 
                  </section>

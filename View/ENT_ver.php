@@ -86,14 +86,21 @@ include("head.php");
                                     <?php
                                     require_once '../Controller/EntradaController.php';
                                     $objControl = new EntradaController();
+                                    $objControl->atualizarDadosEntrada($id);
                                     $objControl->listarItem($id);
+                                    
                                     ?>
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th> <a href="ENT_cadastro.php"><i class="fa fa-plus-square" aria-hidden="true"></i></a></th>
-
+                                        <th> <a href="ENT_cadastroitem.php?id=<?php echo $id;?>"><i class="fa fa-plus-square" aria-hidden="true"></i></a></th>
+                                        <th></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th>                                       <a href="../view/ENT_listar.php"><button type="button"  class="btn btn-warning">Voltar</button>    </a>
+</th>
 
                                     </tr>
                                 </tfoot>

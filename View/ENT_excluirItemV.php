@@ -22,8 +22,7 @@
         $objControl1->excluirItemV($id);
          // chamar funcao para atualizar os preços dos produtos
         $objControl2->atualizarPrecos();
-        // atualizar valor e qtd total da entrada finalizada
-       $objControl1->atualizarDadosEntrada();
+  
         
         
     }else{
