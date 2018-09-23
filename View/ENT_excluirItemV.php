@@ -19,7 +19,7 @@
          $id=(int)$_GET['id'];
          $objControl1 = new EntradaController();
           $objControl2 = new ProdutoController();
-        $objControl1->excluirItemC($id);
+        $objControl1->excluirItemV($id);
          // chamar funcao para atualizar os preços dos produtos
         $objControl2->atualizarPrecos();
         // atualizar valor e qtd total da entrada finalizada

@@ -1,7 +1,7 @@
 <?php
 function atualizarDadosEntrada(){
     $conn = F_conect();
-        if(isset($_SESSION['entrada'])){
+        if(isset($_SESSION['id_entrada'])){
         $result = mysqli_query($conn, "Select * from item_entrada where id_entrada=".$_SESSION['id_entrada']);
         $qtd_total=0;
         $preco_total=0;
@@ -88,7 +88,27 @@ function cadastraritemEntrada($produto, $qtd, $data_entrada,$data_fabricacao,$da
 
     $conn->close();
 }
-function excluirEntradaItem($id) {
+function excluirEntradaItemV($id) {
+
+    $conn = F_conect();
+
+    $sql = "DELETE FROM item_entrada WHERE id=" . $id;
+
+if($conn->query($sql)){
+    
+        	echo "<script language='javascript' type='text/javascript'>"
+        . "alert('Item da entrada  excluída com sucesso!');";
+
+            echo "</script>";
+        echo "<script language='javascript' type='text/javascript'>
+window.location.href = 'javascript:window.history.go(-1);';
+</script>";
+
+    }
+      $conn->close();
+
+}
+function excluirEntradaItemC($id) {
 
     $conn = F_conect();
 
@@ -109,7 +129,6 @@ window.location.href = 'ENT_cadastro.php';
 
 }
 
-
 function excluirEntrada($id) {
 
     $conn = F_conect();
@@ -123,7 +142,7 @@ if($conn->query($sql)){
 
             echo "</script>";
         echo "<script language='javascript' type='text/javascript'>
-window.location.href = 'javascript:window.history.go(-1);';
+window.location.href = 'ENT_cadastro.php';
 </script>";
 
     }
@@ -145,8 +164,28 @@ function listarEntrada() {
 
            
 
-            echo"<td><a href=ENT_ver.php?id=" . $row['id'] . "><i class='fa fa-eye' aria-hidden='true'></i></a>  <a href=ENT_editar.php?id=" . $row['id'] . "><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a>
+            echo"<td><a href=ENT_ver.php?id=" . $row['id'] . "><i class='fa fa-eye' aria-hidden='true'></i></a>  
                         <a onclick='return confirmar();' href=ENT_excluir.php?id=" . $row['id'] . "><i class='fa fa-trash-o' aria-hidden='true'></i></a></td></tr>";
+        }
+    }
+    $conn->close();
+}
+function listarEntradaItem($id) {
+    $conn = F_conect();
+    $result = mysqli_query($conn, "Select i.id id, i.qtd qtd, p.descricao produto, i.preco_compra preco,i.data_fabricacao fabricacao, i.data_validade validade from item_entrada i , produto p where id_entrada=".$id." and i.id_produto=p.id");
+
+    if (mysqli_num_rows($result)) {
+        while ($row = $result->fetch_assoc()) {
+            echo"<tr><td>" . $row['produto'] . "</td>";
+            echo"<td>" . $row['qtd'] . "</td>";
+            echo"<td>" . $row['preco'] . "</td>";
+            echo"<td>" . $row['fabricacao'] . "</td>";
+            echo"<td>" . $row['validade'] . "</td>";
+
+           
+
+            echo"<td><a href=ENT_ver.php?id=" . $row['id'] . "><i class='fa fa-eye' aria-hidden='true'></i></a>  
+                        <a onclick='return confirmar();' href=ENT_excluirItemV.php?id=" . $row['id'] . "><i class='fa fa-trash-o' aria-hidden='true'></i></a></td></tr>";
         }
     }
     $conn->close();
